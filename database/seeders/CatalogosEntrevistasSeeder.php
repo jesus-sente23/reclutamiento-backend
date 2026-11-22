@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\ResultadoEntrevista;
+use App\Models\TipoEntrevista;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -13,17 +15,17 @@ class CatalogosEntrevistasSeeder extends Seeder
 
         $tipos = [
             [
-                'nombre' => 'Recursos Humanos',
+                'nombre' => 'Recursos Humanos 2',
                 'descripcion' => 'Entrevista para evaluar perfil y competencias generales.',
             ],
             [
-                'nombre' => 'Técnica',
+                'nombre' => 'Técnica 2',
                 'descripcion' => 'Entrevista para evaluar conocimientos técnicos.',
             ],
         ];
 
         foreach ($tipos as $tipo) {
-            DB::table('tipos_entrevista')->updateOrInsert(
+            TipoEntrevista::updateOrCreate(
                 ['nombre' => $tipo['nombre']],
                 [
                     'descripcion' => $tipo['descripcion'],
@@ -34,21 +36,21 @@ class CatalogosEntrevistasSeeder extends Seeder
 
         $resultados = [
             [
-                'nombre' => 'Pendiente',
+                'nombre' => 'Pendiente 2',
                 'descripcion' => 'Entrevista pendiente de evaluación.',
             ],
             [
-                'nombre' => 'Aprobado',
+                'nombre' => 'Aprobado 2',
                 'descripcion' => 'El candidato aprobó la entrevista.',
             ],
             [
-                'nombre' => 'No aprobado',
+                'nombre' => 'No aprobado 2',
                 'descripcion' => 'El candidato no aprobó la entrevista.',
             ],
         ];
 
         foreach ($resultados as $resultado) {
-            DB::table('resultados_entrevista')->updateOrInsert(
+            ResultadoEntrevista::updateOrCreate(
                 ['nombre' => $resultado['nombre']],
                 [
                     'descripcion' => $resultado['descripcion'],

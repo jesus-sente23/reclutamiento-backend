@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\EstadoPostulacion;
+use App\Models\FuenteReclutamiento;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -19,7 +21,7 @@ class CatalogosPostulacionesSeeder extends Seeder
         ];
 
         foreach ($estados as $nombre) {
-            DB::table('estados_postulacion')->updateOrInsert(
+            EstadoPostulacion::updateOrCreate(
                 ['nombre' => $nombre],
                 [
                     'descripcion' => 'Estado: ' . $nombre,
@@ -36,7 +38,7 @@ class CatalogosPostulacionesSeeder extends Seeder
         ];
 
         foreach ($fuentes as $nombre) {
-            DB::table('fuentes_reclutamiento')->updateOrInsert(
+            FuenteReclutamiento::updateOrCreate(
                 ['nombre' => $nombre],
                 [
                     'descripcion' => 'Fuente: ' . $nombre,

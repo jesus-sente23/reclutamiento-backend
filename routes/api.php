@@ -23,47 +23,24 @@ Route::post('/login', [AuthController::class, 'login'])
     ->middleware('throttle:5,1');
 
 Route::middleware('auth:sanctum')->group(function () {
+    //autenticacion
     Route::get('/user', [AuthController::class, 'user']);
     Route::post('/logout', [AuthController::class, 'logout']);
-});
 
-Route::middleware('auth:sanctum')->group(function () {
+    //vacantes
     Route::get('/vacantes/opciones', [VacanteController::class, 'opciones']);
     Route::apiResource('vacantes', VacanteController::class);
-});
 
-Route::middleware('auth:sanctum')->group(function () {
+    //candidatos
     Route::apiResource('candidatos', CandidatoController::class);
-});
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/postulaciones/opciones', [
-        PostulacionController::class,
-        'opciones'
-    ]);
+    //postulaciones
+    Route::get('/postulaciones/opciones', [PostulacionController::class, 'opciones']);
+    Route::get('/postulaciones', [PostulacionController::class, 'index']);
+    Route::post('/postulaciones', [PostulacionController::class, 'store']);
+    Route::patch('/postulaciones/{postulacion}/estado', [PostulacionController::class, 'actualizarEstado']);
 
-    Route::get('/postulaciones', [
-        PostulacionController::class,
-        'index'
-    ]);
-
-    Route::post('/postulaciones', [
-        PostulacionController::class,
-        'store'
-    ]);
-
-    Route::patch('/postulaciones/{postulacion}/estado', [
-        PostulacionController::class,
-        'actualizarEstado'
-    ]);
-});
-
-
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/entrevistas/opciones', [
-        EntrevistaController::class,
-        'opciones'
-    ]);
-
+    //entrevistas
+    Route::get('/entrevistas/opciones', [EntrevistaController::class, 'opciones']);
     Route::apiResource('entrevistas', EntrevistaController::class);
 });

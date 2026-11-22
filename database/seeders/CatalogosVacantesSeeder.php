@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\EstadoVacante;
+use App\Models\ModalidadTrabajo;
+use App\Models\Unidad;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -26,7 +29,7 @@ class CatalogosVacantesSeeder extends Seeder
         ];
 
         foreach ($unidades as $unidad) {
-            DB::table('unidades')->updateOrInsert(
+            Unidad::updateOrCreate(
                 ['nombre' => $unidad['nombre']],
                 [
                     'descripcion' => $unidad['descripcion'],
@@ -52,7 +55,7 @@ class CatalogosVacantesSeeder extends Seeder
         ];
 
         foreach ($modalidades as $modalidad) {
-            DB::table('modalidades_trabajo')->updateOrInsert(
+            ModalidadTrabajo::updateOrCreate(
                 ['nombre' => $modalidad['nombre']],
                 [
                     'descripcion' => $modalidad['descripcion'],
@@ -74,7 +77,7 @@ class CatalogosVacantesSeeder extends Seeder
         ];
 
         foreach ($estados as $estado) {
-            DB::table('estados_vacante')->updateOrInsert(
+            EstadoVacante::updateOrCreate(
                 ['nombre' => $estado['nombre']],
                 [
                     'descripcion' => $estado['descripcion'],
