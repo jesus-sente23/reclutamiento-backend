@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\CandidatoController;
+use App\Http\Controllers\Api\VacanteController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
@@ -21,4 +23,13 @@ Route::post('/login', [AuthController::class, 'login'])
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [AuthController::class, 'user']);
     Route::post('/logout', [AuthController::class, 'logout']);
+});
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/vacantes/opciones', [VacanteController::class, 'opciones']);
+    Route::apiResource('vacantes', VacanteController::class);
+});
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('candidatos', CandidatoController::class);
 });
