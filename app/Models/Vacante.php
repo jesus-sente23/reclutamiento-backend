@@ -42,4 +42,9 @@ class Vacante extends Model
     {
         return $this->belongsTo(User::class, 'user_crea_id');
     }
+
+    public function postulaciones()
+    {
+        return $this->hasMany(Postulacion::class, 'vacante_id');
+    }
 }

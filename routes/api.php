@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\CandidatoController;
+use App\Http\Controllers\Api\PostulacionController;
 use App\Http\Controllers\Api\VacanteController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -32,4 +33,26 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('candidatos', CandidatoController::class);
+});
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/postulaciones/opciones', [
+        PostulacionController::class,
+        'opciones'
+    ]);
+
+    Route::get('/postulaciones', [
+        PostulacionController::class,
+        'index'
+    ]);
+
+    Route::post('/postulaciones', [
+        PostulacionController::class,
+        'store'
+    ]);
+
+    Route::patch('/postulaciones/{postulacion}/estado', [
+        PostulacionController::class,
+        'actualizarEstado'
+    ]);
 });
