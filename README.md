@@ -1,58 +1,163 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Backend - Sistema de Reclutamiento
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+API REST desarrollada con Laravel para administrar la información del Sistema de Reclutamiento.
 
-## About Laravel
+El backend permite gestionar vacantes, candidatos, postulaciones y entrevistas, además de proporcionar autenticación mediante Laravel Sanctum.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Tecnologías utilizadas
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- PHP
+- Laravel
+- Laravel Sanctum
+- SQL Server
+- Composer
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Requisitos previos
 
-## Learning Laravel
+Para ejecutar el proyecto es necesario contar con:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- PHP compatible con la versión de Laravel utilizada.
+- Composer.
+- SQL Server.
+- Extensiones PHP `sqlsrv` y `pdo_sqlsrv`.
+- Git.
+- Laragon.
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Instalación
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+### 1. Despues de clonar repositorio
 
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+Ingresar a la carpeta del proyecto:
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+cd practica_backend
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+### 2. Instalar dependencias
 
-## Contributing
+```bash
+composer install
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 3. Configurar variables de entorno
 
-## Code of Conduct
+Crear el archivo `.env` utilizando como referencia `.env.example`.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Generar la clave de la aplicación:
 
-## Security Vulnerabilities
+```bash
+php artisan key:generate
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 4. Configurar SQL Server
 
-## License
+Crear una base de datos en SQL Server:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```sql
+CREATE DATABASE reclutamiento;
+```
+
+Modificar las variables de conexión en `.env`:
+
+```env
+DB_CONNECTION=sqlsrv
+DB_HOST=localhost
+DB_PORT=1433
+DB_DATABASE=reclutamiento
+DB_USERNAME=USUARIO
+DB_PASSWORD=CONTRASENA
+```
+
+Sustituir `USUARIO` y `CONTRASENA` por las credenciales locales de SQL Server.
+
+Verificar que SQL Server esté iniciado y que las extensiones correspondientes estén habilitadas en PHP.
+
+### 5. Ejecutar migraciones
+
+Para crear las tablas de la base de datos:
+
+```bash
+php artisan migrate
+```
+
+### 6. Ejecutar seeders
+
+Para cargar los catálogos y usuarios iniciales:
+
+```bash
+php artisan db:seed
+```
+
+Este comando ejecutará los seeders registrados en `DatabaseSeeder.php`.
+
+Si algún seeder no está registrado, deberá ejecutarse individualmente mediante:
+
+```bash
+php artisan db:seed --class=NombreDelSeeder
+```
+
+
+
+La API estará disponible en:
+
+```text
+http://127.0.0.1:8000/api
+```
+
+
+## Funcionalidades de la API
+
+### Autenticación
+
+- Inicio de sesión.
+- Consulta del usuario autenticado.
+- Cierre de sesión.
+- Protección de rutas mediante Laravel Sanctum.
+
+### Vacantes
+
+- Registrar vacantes.
+- Consultar vacantes.
+- Actualizar vacantes.
+- Eliminar vacantes.
+- Consultar catálogos de unidades, modalidades y estados.
+
+### Candidatos
+
+- Registrar candidatos.
+- Consultar candidatos.
+- Actualizar candidatos.
+- Eliminar candidatos.
+
+### Postulaciones
+
+- Registrar postulaciones.
+- Consultar postulaciones.
+- Filtrar por vacante y estado.
+- Actualizar el estado de una postulación.
+- Consultar catálogos relacionados.
+
+### Entrevistas
+
+- Registrar entrevistas.
+- Consultar entrevistas.
+- Actualizar entrevistas.
+- Eliminar entrevistas.
+- Consultar tipos y resultados de entrevistas.
+
+## Usuarios de prueba
+
+Los usuarios iniciales se encuentran definidos en `UserSeeder.php`.
+
+Es necesario ejecutar el seeder correspondiente antes de iniciar sesión.
+
+
+## Verificación del funcionamiento
+
+Después de iniciar el servidor:
+
+1. Confirmar que Laravel responde en `http://127.0.0.1:8000`.
+2. Verificar la conexión a SQL Server.
+3. Comprobar que las migraciones y los seeders se ejecutaron correctamente.
+4. Iniciar sesión desde el frontend.
+5. Realizar operaciones de consulta, creación, actualización y eliminación.
