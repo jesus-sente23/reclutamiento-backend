@@ -48,4 +48,9 @@ class Postulacion extends Model
     {
         return $this->belongsTo(User::class, 'user_crea_id');
     }
+
+    public function entrevistas()
+    {
+        return $this->hasMany(Entrevista::class, 'postulacion_id');
+    }
 }

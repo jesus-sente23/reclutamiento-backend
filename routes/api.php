@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\CandidatoController;
+use App\Http\Controllers\Api\EntrevistaController;
 use App\Http\Controllers\Api\PostulacionController;
 use App\Http\Controllers\Api\VacanteController;
 use Illuminate\Http\Request;
@@ -55,4 +56,14 @@ Route::middleware('auth:sanctum')->group(function () {
         PostulacionController::class,
         'actualizarEstado'
     ]);
+});
+
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/entrevistas/opciones', [
+        EntrevistaController::class,
+        'opciones'
+    ]);
+
+    Route::apiResource('entrevistas', EntrevistaController::class);
 });
