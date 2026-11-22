@@ -1,0 +1,24 @@
+<?php
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\AuthController;
+
+Route::get('/user', function (Request $request) {
+    return $request->user();
+})->middleware('auth:sanctum');
+
+Route::get('/conexion', function () {
+    return response()->json([
+        'success' => true,
+        'message' => 'Conexión exitosa con Laravel',
+    ]);
+});
+
+Route::post('/login', [AuthController::class, 'login'])
+    ->middleware('throttle:5,1');
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user', [AuthController::class, 'user']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+});
